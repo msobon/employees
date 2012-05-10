@@ -1,0 +1,43 @@
+# Users
+
+users:
+
+    - !!models.User
+        email:      guillaume@sample.com
+        name:       Guillaume Bort
+        password:   secret
+
+    - !!models.User
+        email:      maxime@sample.com
+        name:       Maxime Dantec
+        password:   secret
+
+    - !!models.User
+        email:      sadek@sample.com
+        name:       Sadek Drobi
+        password:   secret
+
+    - !!models.User
+        email:      erwan@sample.com
+        name:       Erwan Loisant
+        password:   secret
+
+    - !!models.User
+        email:      admin@sample.com
+        name:       Jack Admin
+        password:   secret
+        isAdmin:    true
+
+# Employees
+employees:
+
+    - !!models.Employee
+        firstName:      Mike
+        lastName:       Sobon
+        homeAddress:    some street 5
+        mailAddress:    some mail address
+        salary:         12345
+        employmentDate: 2011-11-15
+        comments:       no comments
+
+

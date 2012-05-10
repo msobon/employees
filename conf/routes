@@ -5,5 +5,10 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+# Employees
+GET     /employees                        controllers.Employees.employees()
+POST    /employee                         controllers.Employees.createEmployee()
+POST    /employee/:id/delete              controllers.Employees.deleteEmployee(id: Long)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

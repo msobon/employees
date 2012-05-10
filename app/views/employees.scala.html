@@ -1,0 +1,39 @@
+@(employees: List[Employee], employeeForm: Form[Employee])
+
+@import helper._
+
+@main("Employees") {
+
+<h1>@employees.size() employees(s)</h1>
+
+<ul>
+    @for(employee <- employees) {
+    <li>
+        @employee.firstName @employee.lastName <br>
+
+        @form(routes.Employees.deleteEmployee(employee.id)) {
+            <input type="submit" value="Fire!">
+        }
+    </li>
+    }
+</ul>
+
+
+    <h2>Add a new employee</h2>
+
+    @form(routes.Employees.createEmployee()) {
+
+    @inputText(employeeForm("firstName"))
+    @inputText(employeeForm("lastName"))
+    @inputText(employeeForm("homeAddress"))
+    @inputText(employeeForm("mailAddress"))
+    @inputText(employeeForm("employmentDate"))
+    @inputText(employeeForm("salary"))
+    @inputText(employeeForm("comments"))
+
+    <input type="submit" value="Create">
+
+    }
+
+
+}
