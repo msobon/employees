@@ -18,6 +18,12 @@ public class Employees extends Controller {
         );
     }
 
+    public static Result employeeDetails(Long id){
+        return ok(
+                views.html.employeeDetails.render(Employee.find.byId(id))
+        );
+    }
+
     public static Result deleteEmployee(Long id) {
         Employee.find.ref(id).delete();
         return redirect(routes.Employees.employees());

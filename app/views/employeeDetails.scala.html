@@ -1,0 +1,13 @@
+@(employee: Employee)
+
+@import helper._
+
+@main("Employee details") {
+
+@employee.firstName @employee.lastName<br>
+@employee.homeAddress @employee.mailAddress<br>
+@employee.salary<br>
+@employee.employmentDate<br>
+@employee.comments
+
+}

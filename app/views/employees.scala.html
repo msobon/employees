@@ -9,7 +9,7 @@
 <ul>
     @for(employee <- employees) {
     <li>
-        @employee.firstName @employee.lastName <br>
+        <a href="/employee/@employee.id">@employee.firstName @employee.lastName</a>
 
         @form(routes.Employees.deleteEmployee(employee.id)) {
             <input type="submit" value="Fire!">
