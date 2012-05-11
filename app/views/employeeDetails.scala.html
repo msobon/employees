@@ -1,8 +1,8 @@
-@(employee: Employee)
+@(employee: Employee, performer: User)
 
 @import helper._
 
-@main("Employee details") {
+@main("Employee details", performer) {
 
 @employee.firstName @employee.lastName<br>
 @employee.homeAddress @employee.mailAddress<br>

@@ -1,0 +1,11 @@
+@(performer: User, user: User)
+
+@import helper._
+
+@main("User details", performer) {
+
+@user.name<br>
+@user.email<br>
+Used credits @user.usedCredits<br>
+
+}

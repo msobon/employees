@@ -1,8 +1,8 @@
-@(employees: List[Employee], employeeForm: Form[Employee])
+@(employees: List[Employee], employeeForm: Form[Employee], performer: User)
 
 @import helper._
 
-@main("Employees") {
+@main("Employees", performer) {
 
 <h1>@employees.size() employees(s)</h1>
 

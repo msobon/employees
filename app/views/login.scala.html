@@ -1,0 +1,49 @@
+@(form: Form[Application.Login])
+
+<html>
+    <head>
+        <title>Saas Portal</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+    </head>
+    <body>
+        
+        @helper.form(routes.Application.authenticate) {
+            
+            <h1>Sign in</h1>
+            
+            @if(form.hasGlobalErrors) { 
+                <p class="error">
+                    @form.globalError.message
+                </p>
+            }
+            
+            @if(flash.contains("success")) {
+                <p class="success">
+                    @flash.get("success")
+                </p>
+            }
+            
+            <p>
+                <input type="email" name="email" placeholder="Email" value="@form("email").value">
+            </p>
+            <p>
+                <input type="password" name="password" placeholder="Password">
+            </p>
+            <p>
+                <button type="submit">Login</button>
+            </p>
+            
+        }
+
+        <a href="@routes.Application.register" ><span>Register</span></a>
+
+        <p class="note">
+            Try <em>guillaume@@sample.com</em> or <em>admin@@sample.com</em> with <em>secret</em> as password.
+        </p>
+            
+    </body>
+</html>
+    
+
+
