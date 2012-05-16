@@ -10,6 +10,21 @@
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
     </head>
     <body>
+    <header>
+        <dl id="user">
+            <dt>@performer.name <span>(@performer.email)</span></dt>
+            <dd>
+                <a href="@routes.Application.logout()">Logout</a>
+            </dd>
+        </dl>
+    </header>
+
+    <section id ="menu">
+        <a href="@routes.Employees.employees" ><span>My Employees</span></a>
+        @if(performer.isAdmin) {
+        <a href="@routes.Users.users" ><span>Users</span></a>
+        }
+    </section>
         @content
     </body>
 </html>

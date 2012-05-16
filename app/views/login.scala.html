@@ -2,13 +2,13 @@
 
 <html>
     <head>
-        <title>Saas Portal</title>
+        <title>Employees</title>
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
     </head>
     <body>
         
-        @helper.form(routes.Application.authenticate) {
+        @helper.form(action = routes.Application.authenticate) {
             
             <h1>Sign in</h1>
             
