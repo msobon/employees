@@ -9,6 +9,8 @@ import views.html.*;
 
 public class Application extends Controller {
 
+    public static String portalAuthUrl = "localhost:9000/accounting";
+
     static Form<User> userForm = form(User.class);
 
     // -- Authentication
