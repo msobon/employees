@@ -3,6 +3,7 @@ package controllers;
 
 import models.Employee;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.mvc.*;
 
@@ -44,6 +45,8 @@ public class Employees extends Controller {
         } else {
             chargeUser(Http.Context.current().request().username(),100);
             Employee.create(filledForm.get());
+
+            Logger.info("Employee "+filledForm.data().get("email")+ " added");
             return redirect(routes.Employees.employees());
         }
     }
