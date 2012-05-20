@@ -4,10 +4,11 @@
 
 @main("Employees", performer) {
 
-@employees.size() employees(s)
+@employees.size() employees(s)<br>
 
 <ul>
     @for(employee <- employees) {
+
     <li>
         <a href="/employee/@employee.id">@employee.firstName @employee.lastName</a>
 
@@ -17,6 +18,7 @@
     </li>
     }
 </ul>
+
 
 
     <h2>Add a new employee</h2>
