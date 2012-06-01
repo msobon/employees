@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
 
 @Security.Authenticated(Secured.class)
 public class Employees extends Controller {
@@ -43,7 +44,9 @@ public class Employees extends Controller {
                     views.html.employees.render(Employee.all(), filledForm, User.findByEmail(Http.Context.current().request().username()))
             );
         } else {
-            chargeUser(Http.Context.current().request().username(),100);
+            if(!chargeUser(Http.Context.current().request().username(),Application.createUserFee)){
+                return ok(views.html.noCredits.render(User.findByEmail(Http.Context.current().request().username())));
+            }
             Employee.create(filledForm.get());
 
             Logger.info("Employee "+filledForm.data().get("email")+ " added");
@@ -51,36 +54,34 @@ public class Employees extends Controller {
         }
     }
 
-    private static void chargeUser(String email, long fee){
+    private static boolean chargeUser(String email, long fee){
         HttpClient client = new HttpClient();
-        client.getParams().setParameter("http.useragent", "Test Client");
-
+        client.getParams().setParameter("http.useragent", "App Client");
         BufferedReader br = null;
 
-        PostMethod method = new PostMethod(Application.portalAuthUrl);
-        method.addParameter("email", email);
-        method.addParameter("fee", String.valueOf(fee));
-
+        GetMethod method = new GetMethod(Application.portalAuthUrl+"/"+email+"/"+fee);
+        boolean result =false;
         try{
             int returnCode = client.executeMethod(method);
 
             if(returnCode == HttpStatus.SC_NOT_IMPLEMENTED) {
-                System.err.println("The Post method is not implemented by this URI");
+                System.err.println("The Get method is not implemented by this URI");
                 // still consume the response body
                 method.getResponseBodyAsString();
             } else {
                 br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
-                String readLine;
-                while(((readLine = br.readLine()) != null)) {
-                    System.err.println(readLine);
+                String readLine = br.readLine();
+                if("true".equals(readLine.trim())){
+                    System.err.println("true");
+                    result = true;
                 }
             }
         } catch (Exception e) {
             System.err.println(e);
         } finally {
             method.releaseConnection();
-            if(br != null) try { br.close(); } catch (Exception fe) {}
+            if(br != null) try { br.close(); } catch (Exception fe) {System.err.println("conn not closed");}
         }
-
+      return result;
     }
 }
