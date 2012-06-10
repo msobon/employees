@@ -4,30 +4,29 @@
 
 @main("Users", user) {
 
-<h1>@users.size() user(s)</h1>
+<h1>Users</h1>
 
 <ul>
     @for(user <- users) {
     <li>
         <a href="/user/@user.email">@user.name</a>
 
-        @form(routes.Users.deleteUser(user.id)) {
-        <input type="submit" value="Delete">
-        }
+        <div class="buttons">
+            @form(routes.Users.deleteUser(user.id)) {
+                <input type="submit" value="Delete">
+            }
+        </div>
     </li>
     }
-</ul>
-
-<h2>Add a new user</h2>
+</ul><br>
 
 @form(routes.Users.createUser()) {
+    <h1>Add a new user</h1>
+    @inputText(userForm("name"))
+    @inputText(userForm("email"))
+    @inputText(userForm("password"))
 
-@inputText(userForm("name"))
-@inputText(userForm("email"))
-@inputText(userForm("password"))
-
-<input type="submit" value="Create">
-
+    <input type="submit" value="Create">
 }
 
 }

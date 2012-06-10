@@ -4,38 +4,35 @@
 
 @main("Employees", performer) {
 
-@employees.size() employees(s)<br>
-
+<h1>Employees</h1>
 <ul>
     @for(employee <- employees) {
 
     <li>
         <a href="/employee/@employee.id">@employee.firstName @employee.lastName</a>
 
-        @form(routes.Employees.deleteEmployee(employee.id)) {
-            <input type="submit" value="Fire!">
-        }
+        <div class="buttons">
+            @form(routes.Employees.deleteEmployee(employee.id)) {
+                <input type="submit" value="Fire!">
+            }
+        </div>
     </li>
     }
 </ul>
-
-
-
-    <h2>Add a new employee</h2>
+<br>
 
     @form(routes.Employees.createEmployee()) {
+        <h1>Add a new employee</h1>
 
-    @inputText(employeeForm("firstName"))
-    @inputText(employeeForm("lastName"))
-    @inputText(employeeForm("homeAddress"))
-    @inputText(employeeForm("mailAddress"))
-    @inputText(employeeForm("employmentDate"))
-    @inputText(employeeForm("salary"))
-    @inputText(employeeForm("comments"))
+        @inputText(employeeForm("firstName"))
+        @inputText(employeeForm("lastName"))
+        @inputText(employeeForm("homeAddress"))
+        @inputText(employeeForm("mailAddress"))
+        @inputText(employeeForm("employmentDate"))
+        @inputText(employeeForm("salary"))
+        @inputText(employeeForm("comments"))
 
-    <input type="submit" value="Create">
-
+        <input type="submit" value="Create">
     }
-
 
 }

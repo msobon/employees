@@ -4,10 +4,11 @@
 
 @main("Employee details", performer) {
 
-@employee.firstName @employee.lastName<br>
-@employee.homeAddress @employee.mailAddress<br>
-@employee.salary<br>
-@employee.employmentDate<br>
-@employee.comments
+<h1>Employee details - @employee.firstName @employee.lastName </h1>
+
+Home address: @employee.homeAddress Mail address: @employee.mailAddress<br>
+Salary: @employee.salary<br>
+Employment date: @employee.employmentDate<br>
+Comments: @employee.comments
 
 }

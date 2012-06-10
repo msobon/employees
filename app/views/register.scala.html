@@ -14,18 +14,15 @@
     <script type="text/javascript" src="@routes.Assets.at("javascripts/backbone-min.js")"></script>
     <script type="text/javascript" src="@routes.Assets.at("javascripts/main.js")"></script>
 </head>
-<body>
-
-<h1>Reqister</h1>
+<body style="margin:10px;">
 
 @form(routes.Application.register()) {
+    <h1>Register</h1>
+    @inputText(userForm("name"))
+    @inputText(userForm("email"))
+    @inputText(userForm("password"))
 
-@inputText(userForm("name"))
-@inputText(userForm("email"))
-@inputText(userForm("password"))
-
-<input type="submit" value="Create">
-
+    <input type="submit" value="Create">
 }
 </body>
 
