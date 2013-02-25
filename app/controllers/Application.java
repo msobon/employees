@@ -34,9 +34,20 @@ public class Application extends Controller {
      * Login page.
      */
     public static Result login() {
-        return ok(
-                login.render(form(Login.class))
-        );
+        String ssoToken = "";
+
+        if (request().cookies().get("ssoToken") != null) {
+            ssoToken = request().cookies().get("ssoToken").value();
+        }
+
+        if (ssoToken == "") {
+            return redirect("http://localhost:9000?redirectUrl=appUrl")  ; //todo wywalic do propertisow + dodac return redirect
+//            return ok(
+//                    login.render(form(Login.class))
+//            );
+        } else {
+            return ok("cookie was set, TODO token validation via rest service");
+        }
     }
 
     /**
@@ -48,6 +59,7 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session("email", loginForm.get().email);
+
             return redirect(
                     routes.Employees.employees()
             );
