@@ -1,9 +1,14 @@
 package controllers;
 
 
-import models.User;
-import play.data.Form;
+import play.*;
 import play.mvc.*;
+import play.data.*;
+
+import static play.data.Form.*;
+
+import models.*;
+import views.html.*;
 
 
 @Security.Authenticated(Secured.class)

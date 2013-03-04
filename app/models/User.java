@@ -4,10 +4,11 @@ import com.avaje.ebean.Ebean;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-import play.db.jpa.Transactional;
+import play.db.ebean.Transactional;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**

@@ -1,12 +1,14 @@
 package controllers;
 
 
-import models.Employee;
-import models.User;
-import play.Logger;
-import play.data.Form;
+import play.*;
 import play.mvc.*;
+import play.data.*;
 
+import static play.data.Form.*;
+
+import models.*;
+import views.html.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
