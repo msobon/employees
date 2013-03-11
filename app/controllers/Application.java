@@ -15,6 +15,7 @@ import views.html.*;
 public class Application extends Controller {
 
     public static final String SSO_VALIDATION_URL = "http://localhost:9000/sso/validate/";
+    public static final String SSO_lOGOUT_URL = "http://localhost:9000/sso/logout/";
     public static final String ACCOUNTING_URL = "http://localhost:9000/accounting";
     public static final String PORTAL_AUTH_URL = "http://localhost:9000";
     public static final String APP_URL = "http://localhost:9001";     //TODO move to app_cofig
@@ -58,7 +59,7 @@ public class Application extends Controller {
                             }
                         }
                     }));
-        }else{
+        } else {
             Logger.debug("No token found, redirecting to portal");
             response().setCookie("redirectUrl", APP_URL);
 
@@ -90,10 +91,18 @@ public class Application extends Controller {
      * Logout and clean the session.
      */
     public static Result logout() {
+        WS.url(SSO_lOGOUT_URL + "/" + request().username()).get().map(
+                new F.Function<WS.Response, Result>() {
+                    public Result apply(WS.Response response) {
+                        Logger.debug("SSO session has been destroyed");
+
+                        return ok();
+                    }
+                });
+
         session().clear();
         response().discardCookies("ssoToken");
         flash("success", "You've been logged out");
-
         return redirect(routes.Application.login());
     }
 
