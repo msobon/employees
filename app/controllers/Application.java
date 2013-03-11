@@ -41,6 +41,7 @@ public class Application extends Controller {
      */
     public static Result login() {
         String ssoToken = "";
+        final String redirectUrl = "/"; //TODO
 
         if (request().cookies().get("ssoToken") != null) {
             ssoToken = request().cookies().get("ssoToken").value();
@@ -52,30 +53,31 @@ public class Application extends Controller {
                             if ("err".equals(response.getBody())) {
                                 return ok("Token validation failed");
                             } else {
-                                 return setSession(response.getBody());
+                                return setSession(response.getBody(), "/employees");
                                 //return ok("auth correct");
-//                                return redirect(routes.Employees.employees());
+                                // return redirect(routes.Employees.employees());
                             }
-                           // return ok("ok "+response.getBody());
+                            // return ok("ok "+response.getBody());
                         }
                     }));
         }
         if (ssoToken == "") {
-            return redirect("http://localhost:9000?redirectUrl=appUrl"); //todo wywalic do propertisow + dodac return redirect
+            return redirect("http://localhost:9000?redirectUrl=http://localhost:900l"); //todo wywalic do propertisow + dodac return redirect na cookiesie
 //            return ok(
 //                    login.render(form(Login.class))
 //            );
         } else {
 
-
             return ok("cookie was set, TODO token validation via rest service");
         }
     }
 
-    public static Result setSession(String email){
-       // session("email", email);  wymaga upgraed'u play'a do 2.1
-        return ok("session set");
+    public static Result setSession(String email, String redirectUrl) {
+        session("email", email);
+        Logger.debug("Session set for user: " + email);
+        return redirect(redirectUrl);
     }
+
     /**
      * Handle login form submission.
      */
@@ -86,10 +88,7 @@ public class Application extends Controller {
         } else {
             session("email", loginForm.get().email);
 
-            return redirect(
-                    routes.Employees.employees()
-            );
-
+            return redirect(routes.Employees.employees());
         }
     }
 
@@ -98,19 +97,18 @@ public class Application extends Controller {
      */
     public static Result logout() {
         session().clear();
+        response().discardCookies("ssoToken");
         flash("success", "You've been logged out");
-        return redirect(
-                routes.Application.login()
-        );
+
+        return redirect(routes.Application.login());
     }
 
     public static Result register() {
         //TODO validation
         Form<User> filledForm = userForm.bindFromRequest();
         if (filledForm.hasErrors()) {
-            return badRequest(
-                    views.html.register.render(filledForm)
-            );
+
+            return badRequest(views.html.register.render(filledForm));
         } else {
             User.create(filledForm.get());
             return redirect(routes.Application.login());
