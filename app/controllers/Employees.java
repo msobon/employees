@@ -61,7 +61,7 @@ public class Employees extends Controller {
         client.getParams().setParameter("http.useragent", "App Client");
         BufferedReader br = null;
 
-        GetMethod method = new GetMethod(Application.portalAuthUrl+"/"+email+"/"+fee);
+        GetMethod method = new GetMethod(Application.ACCOUNTING_URL +"/"+email+"/"+fee);
         boolean result =false;
         try{
             int returnCode = client.executeMethod(method);

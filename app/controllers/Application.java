@@ -14,11 +14,13 @@ import views.html.*;
 
 public class Application extends Controller {
 
-    public static String portalAuthUrl = "http://localhost:9000/accounting";
-    public static Long createUserFee = 5l;
-
-    static Form<User> userForm = form(User.class);
     public static final String SSO_VALIDATION_URL = "http://localhost:9000/sso/validate/";
+    public static final String ACCOUNTING_URL = "http://localhost:9000/accounting";
+    public static final String PORTAL_AUTH_URL = "http://localhost:9000";
+    public static final String APP_URL = "http://localhost:9001";     //TODO move to app_cofig
+
+    public static Long createUserFee = 5l;
+    static Form<User> userForm = form(User.class);
 
     // -- Authentication
 
@@ -41,7 +43,6 @@ public class Application extends Controller {
      */
     public static Result login() {
         String ssoToken = "";
-        final String redirectUrl = "/"; //TODO
 
         if (request().cookies().get("ssoToken") != null) {
             ssoToken = request().cookies().get("ssoToken").value();
@@ -54,21 +55,14 @@ public class Application extends Controller {
                                 return ok("Token validation failed");
                             } else {
                                 return setSession(response.getBody(), "/employees");
-                                //return ok("auth correct");
-                                // return redirect(routes.Employees.employees());
                             }
-                            // return ok("ok "+response.getBody());
                         }
                     }));
-        }
-        if (ssoToken == "") {
-            return redirect("http://localhost:9000?redirectUrl=http://localhost:900l"); //todo wywalic do propertisow + dodac return redirect na cookiesie
-//            return ok(
-//                    login.render(form(Login.class))
-//            );
-        } else {
+        }else{
+            Logger.debug("No token found, redirecting to portal");
+            response().setCookie("redirectUrl", APP_URL);
 
-            return ok("cookie was set, TODO token validation via rest service");
+            return redirect(PORTAL_AUTH_URL);
         }
     }
 
