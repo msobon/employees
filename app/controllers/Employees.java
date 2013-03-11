@@ -21,6 +21,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 public class Employees extends Controller {
 
     static Form<Employee> employeeForm = form(Employee.class);
+    private static Configuration conf = Play.application().configuration();
 
     public static Result employees() {
         return ok(
@@ -61,7 +62,7 @@ public class Employees extends Controller {
         client.getParams().setParameter("http.useragent", "App Client");
         BufferedReader br = null;
 
-        GetMethod method = new GetMethod(Application.ACCOUNTING_URL +"/"+email+"/"+fee);
+        GetMethod method = new GetMethod(conf.getString("ACCOUNTING_URL") +"/"+email+"/"+fee);
         boolean result =false;
         try{
             int returnCode = client.executeMethod(method);
