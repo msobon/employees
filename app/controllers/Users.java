@@ -44,7 +44,15 @@ public class Users extends Controller {
             return Results.forbidden();
     }
 
+    public static Result addSSOUser(String email, String name) {
+        User u = new User();
+        u.email = email;
+        u.name = name;
+        u.password = "";
+        User.create(u);
 
+        return ok("user added");
+    }
 
     public static Result createUser() {
         Form<User> filledForm = userForm.bindFromRequest();

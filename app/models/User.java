@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Ebean;
+import play.Logger;
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -14,8 +15,8 @@ import java.util.List;
 /**
  * User entity managed by Ebean
  */
-@Entity 
-@Table(name="account")
+@Entity
+@Table(name = "account")
 public class User extends Model {
 
     @Id
@@ -24,10 +25,10 @@ public class User extends Model {
     @Constraints.Required
     @Formats.NonEmpty
     public String email;
-    
+
     @Constraints.Required
     public String name;
-    
+
     @Constraints.Required
     public String password;
 
@@ -35,10 +36,10 @@ public class User extends Model {
 
     public boolean isAdmin = false;
 
-    
+
     // -- Queries
-    
-    public static Finder<String,User> find = new Finder(String.class, User.class);
+
+    public static Finder<String, User> find = new Finder(String.class, User.class);
 
     public static Finder<Long, User> findById = new Finder(Long.class, User.class);
 
@@ -61,21 +62,22 @@ public class User extends Model {
      */
     public static User authenticate(String email, String password) {
         return find.where()
-            .eq("email", email)
-            .eq("password", password)
-            .findUnique();
+                .eq("email", email)
+                .eq("password", password)
+                .findUnique();
     }
 
-    public static void create(User user){
-         user.save();
+    public static void create(User user) {
+        Logger.debug("Adding user: " + user);
+        user.save();
     }
 
-    public static void delete(Long id){
+    public static void delete(Long id) {
         findById.ref(id).delete();
     }
 
     // --
-    
+
     public String toString() {
         return "User(" + email + ")";
     }
